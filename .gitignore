@@ -1,0 +1,12 @@
+
+# ignore netbeans specific files
+nb-configuration.xml
+
+# ignore eclipse specific files
+.settings/*
+.classpath
+
+# ignore maven specific files
+./target/*
+./target/**/*
+
