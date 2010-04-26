@@ -7,6 +7,5 @@ nb-configuration.xml
 .classpath
 
 # ignore maven specific files
-./target/*
-./target/**/*
+target/*
 
