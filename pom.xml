@@ -7,7 +7,7 @@
     <version>1-SNAPSHOT</version>
     <packaging>maven-archetype</packaging>
     <name>service-archetype</name>
-    <description>archetype for middleware projects</description>
+    <description>archetype for middleware projects including configs for hibernate, spring, cxf, ...</description>
     <build>
         <extensions>
             <extension>
@@ -35,7 +35,7 @@
         <url>scm:git:git@github.com:pgrund/service-archetype.git</url>
         <developerConnection>scm:git:git@github.com:pgrund/service-archetype.git</developerConnection>
     </scm>
-    
+
     <distributionManagement>
         <repository>
             <id>dh-repo</id>
@@ -47,3 +47,4 @@
         </site>
     </distributionManagement>
 </project>
+
