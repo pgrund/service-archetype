@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><archetype>
+  <id>${parentArtifactId}</id>  <resources>
+    <resource>${parentArtifactId}-client/pom.xml</resource>
+    <resource>${parentArtifactId}-client/src/main/java/v01/client/Client.java</resource>
+    <resource>${parentArtifactId}-client/src/main/resources/${parentArtifactId}-client-testing-ctx.xml</resource>
+    <resource>${parentArtifactId}-client/src/main/resources/${parentArtifactId}-client-production-ctx.xml</resource>
+    <resource>${parentArtifactId}-client/src/main/resources/${parentArtifactId}-client-local-ctx.xml</resource>
+    <resource>${parentArtifactId}-client/src/main/resources/${parentArtifactId}-client-standalonetesting-ctx.xml</resource>
+    <resource>${parentArtifactId}-service/pom.xml</resource>
+    <resource>${parentArtifactId}-service/src/main/java/ServiceImpl.java</resource>
+    <resource>${parentArtifactId}-service/src/main/resources/${parentArtifactId}-service-ctx.xml</resource>
+    <resource>${parentArtifactId}-types/pom.xml</resource>
+    <resource>${parentArtifactId}-types/src/main/java/v01/types/Type.java</resource>
+    <resource>${parentArtifactId}-types/src/main/java/v01/exceptions/ServiceException.java</resource>
+    <resource>${parentArtifactId}-api/pom.xml</resource>
+    <resource>${parentArtifactId}-api/src/main/java/v01/api/IServiceFacade.java</resource>
+    <resource>${parentArtifactId}-db/pom.xml</resource>
+    <resource>${parentArtifactId}-db/src/main/java/db/IDbService.java</resource>
+    <resource>${parentArtifactId}-db/src/main/java/db/DbService.java</resource>
+    <resource>${parentArtifactId}-db/src/main/java/db/dto/ArticleDTO.java</resource>
+    <resource>${parentArtifactId}-db/src/main/resources/db-service-ctx.xml</resource>
+    <resource>${parentArtifactId}-db/src/main/resources/db-ds-ctx.xml</resource>
+    <resource>${parentArtifactId}-db/src/test/java/db/DbServiceTest.java</resource>
+    <resource>${parentArtifactId}-db/src/test/resources/hsqldb-inmemory-ctx.xml</resource>
+    <resource>${parentArtifactId}-db/src/test/resources/import.sql</resource>
+    <resource>${parentArtifactId}-db/src/test/resources/log4j.xml</resource>
+    <resource>${parentArtifactId}-db/profiles.xml</resource>
+    <resource>${parentArtifactId}-adapter-war/pom.xml</resource>
+    <resource>${parentArtifactId}-adapter-war/src/main/webapp/index.jsp</resource>
+    <resource>${parentArtifactId}-adapter-war/src/main/webapp/WEB-INF/remoting-servlet.xml</resource>
+    <resource>${parentArtifactId}-adapter-war/src/main/webapp/WEB-INF/log4j.xml</resource>
+    <resource>${parentArtifactId}-adapter-war/src/main/webapp/WEB-INF/web.xml</resource>
+    <resource>${parentArtifactId}-adapter-war/src/main/webapp/WEB-INF/webservices-ctx.xml</resource>
+    <resource>${parentArtifactId}-adapter-war/src/main/webapp/WEB-INF/monitoring-ctx.xml</resource>
+   </resources>
+  <siteResources>
+    <resource>src/site/changes.xml</resource>
+    <resource>src/site/site.xml</resource>
+  </siteResources>
+</archetype>

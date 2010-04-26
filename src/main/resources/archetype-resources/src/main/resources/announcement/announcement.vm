@@ -1,0 +1,138 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+${symbol_pound}${symbol_pound} html template for announcing new version of ${artifactId}
+${symbol_pound}${symbol_pound} created and maintained by <a href="mailto:peter.grund@1und1.de">Peter Grund</a>
+
+${symbol_pound}set ( ${symbol_dollar}maximumDeployed = 5)
+<html>
+<body>
+The ${symbol_dollar}{developmentTeam} is pleased to announce the <strong>${symbol_dollar}{release.getVersion()} release!</strong>
+<br/>
+This shall be deployed on production system on <strong>${symbol_dollar}{release.getDateRelease()}</strong>, please be prepared.
+<p>
+${symbol_pound}if (${symbol_dollar}release.getActions().size() == 0)
+<h2>No changes defined in this version.</h2>
+${symbol_pound}else
+<h2>Changes in this version include:</h2>
+${symbol_pound}if (${symbol_dollar}release.getActions('add').size() !=0)
+<h3>New features:</h3>
+<ul>
+${symbol_pound}foreach(${symbol_dollar}actionItem in ${symbol_dollar}release.getActions('add'))
+${symbol_pound}set(${symbol_dollar}action=${symbol_dollar}actionItem.getAction())
+${symbol_pound}if (${symbol_dollar}actionItem.getIssue())
+${symbol_pound}set(${symbol_dollar}issue=${symbol_dollar}actionItem.getIssue())
+${symbol_pound}else
+${symbol_pound}set(${symbol_dollar}issue="")
+${symbol_pound}end
+${symbol_pound}if (${symbol_dollar}actionItem.getDueTo())
+${symbol_pound}set(${symbol_dollar}dueto=${symbol_dollar}actionItem.getDueTo())
+${symbol_pound}else
+${symbol_pound}set(${symbol_dollar}dueto="")
+${symbol_pound}end
+<li> ${symbol_dollar}{action} ${symbol_pound}if(${symbol_dollar}!issue != "") Issue: ${symbol_dollar}issue. ${symbol_pound}end${symbol_pound}if(${symbol_dollar}!dueto != "")Thanks to ${symbol_dollar}dueto. ${symbol_pound}end
+</li>
+${symbol_pound}set(${symbol_dollar}issue="")
+${symbol_pound}set(${symbol_dollar}dueto="")
+${symbol_pound}end 
+${symbol_pound}end
+</ul>
+${symbol_pound}if (${symbol_dollar}release.getActions('fix').size() !=0)
+<h3>Fixed Bugs:</h3>
+<ul>
+${symbol_pound}foreach(${symbol_dollar}actionItem in ${symbol_dollar}release.getActions('fix'))
+${symbol_pound}set(${symbol_dollar}action=${symbol_dollar}actionItem.getAction())
+${symbol_pound}if (${symbol_dollar}actionItem.getIssue())
+${symbol_pound}set(${symbol_dollar}issue=${symbol_dollar}actionItem.getIssue())
+${symbol_pound}else
+${symbol_pound}set(${symbol_dollar}issue="")
+${symbol_pound}end
+${symbol_pound}if (${symbol_dollar}actionItem.getDueTo())
+${symbol_pound}set(${symbol_dollar}dueto=${symbol_dollar}actionItem.getDueTo())
+${symbol_pound}else
+${symbol_pound}set(${symbol_dollar}dueto="")
+${symbol_pound}end
+<li> ${symbol_dollar}{action} ${symbol_pound}if(${symbol_dollar}!issue != "") Bug: ${symbol_dollar}issue. ${symbol_pound}end${symbol_pound}if(${symbol_dollar}!dueto != "")Thanks to ${symbol_dollar}dueto. ${symbol_pound}end
+</li>
+${symbol_pound}set(${symbol_dollar}issue="")
+${symbol_pound}set(${symbol_dollar}dueto="")
+${symbol_pound}end
+${symbol_pound}end
+</ul>
+${symbol_pound}if (${symbol_dollar}release.getActions('update').size() !=0)
+<h3>Changes:</h3>
+<ul>
+${symbol_pound}foreach(${symbol_dollar}actionItem in ${symbol_dollar}release.getActions('update'))
+${symbol_pound}set(${symbol_dollar}action=${symbol_dollar}actionItem.getAction())
+${symbol_pound}if (${symbol_dollar}actionItem.getIssue())
+${symbol_pound}set(${symbol_dollar}issue=${symbol_dollar}actionItem.getIssue())
+${symbol_pound}else
+${symbol_pound}set(${symbol_dollar}issue="")
+${symbol_pound}end
+${symbol_pound}if (${symbol_dollar}actionItem.getDueTo())
+${symbol_pound}set(${symbol_dollar}dueto=${symbol_dollar}actionItem.getDueTo())
+${symbol_pound}else
+${symbol_pound}set(${symbol_dollar}dueto="")
+${symbol_pound}end
+<li> ${symbol_dollar}{action} ${symbol_pound}if(${symbol_dollar}!issue != "") Issue: ${symbol_dollar}issue. ${symbol_pound}end${symbol_pound}if(${symbol_dollar}!dueto != "")Thanks to ${symbol_dollar}dueto. ${symbol_pound}end
+</li>
+${symbol_pound}set(${symbol_dollar}issue="")
+${symbol_pound}set(${symbol_dollar}dueto="")
+${symbol_pound}end
+${symbol_pound}end
+</ul>
+${symbol_pound}if (${symbol_dollar}release.getActions('remove').size() !=0)
+<h3>Removed:</h3>
+<ul>
+${symbol_pound}foreach(${symbol_dollar}actionItem in ${symbol_dollar}release.getActions('remove'))
+${symbol_pound}set(${symbol_dollar}action=${symbol_dollar}actionItem.getAction())
+${symbol_pound}if (${symbol_dollar}actionItem.getIssue())
+${symbol_pound}set(${symbol_dollar}issue=${symbol_dollar}actionItem.getIssue())
+${symbol_pound}else
+${symbol_pound}set(${symbol_dollar}issue="")
+${symbol_pound}end
+${symbol_pound}if (${symbol_dollar}actionItem.getDueTo())
+${symbol_pound}set(${symbol_dollar}dueto=${symbol_dollar}actionItem.getDueTo())
+${symbol_pound}else
+${symbol_pound}set(${symbol_dollar}dueto="")
+${symbol_pound}end
+<li> ${symbol_dollar}{action} ${symbol_pound}if(${symbol_dollar}!issue != "") Issue: ${symbol_dollar}issue. ${symbol_pound}end${symbol_pound}if(${symbol_dollar}!dueto != "")Thanks to ${symbol_dollar}dueto. ${symbol_pound}end
+</li>
+${symbol_pound}set(${symbol_dollar}issue="")
+${symbol_pound}set(${symbol_dollar}dueto="")
+${symbol_pound}end
+${symbol_pound}end
+${symbol_pound}${symbol_pound} End of main loop
+${symbol_pound}end
+</ul>
+</p>
+${symbol_pound}if (${symbol_dollar}urlDownload)
+<p>
+For a manual installation, you can download the ${symbol_dollar}{finalName} here:
+${symbol_dollar}{urlDownload}
+</p>
+${symbol_pound}end
+<p>
+Please be aware that the <strong>last ${symbol_dollar}maximumDeployed versions</strong> will be available after deployment.
+<ul>
+${symbol_pound}set(${symbol_dollar}start=0)
+${symbol_pound}foreach ( ${symbol_dollar}r in ${symbol_dollar}releases )
+${symbol_pound}if ( ${symbol_dollar}r.getVersion() == ${symbol_dollar}release.getVersion() )
+${symbol_pound}set( ${symbol_dollar}start = ${symbol_dollar}velocityCount )
+${symbol_pound}end
+${symbol_pound}if ( ${symbol_dollar}velocityCount - ${symbol_dollar}start < ${symbol_dollar}maximumDeployed )
+${symbol_pound}if(${symbol_dollar}r.getDateRelease() && ${symbol_dollar}r.getDateRelease() != "???")
+   <li> ${symbol_dollar}{r.getVersion()} - deployed at ${symbol_dollar}{r.getDateRelease()}</li>
+${symbol_pound}end
+${symbol_pound}end
+${symbol_pound}end
+</ul>
+Older versions will be undeployed, so <strong style="color:red">PLEASE BE PREPARED!!!</strong>.
+<br/>
+Further information can be found on <a href="${symbol_dollar}url">projects web site</a>.</p>
+<p>
+Have fun!<br/><br/>
+${symbol_dollar}{developmentTeam}
+</p>
+</body>
+</html>

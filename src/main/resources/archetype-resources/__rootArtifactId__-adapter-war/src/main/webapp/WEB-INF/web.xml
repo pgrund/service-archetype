@@ -1,0 +1,84 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:META-INF/cxf/cxf.xml
+            classpath:META-INF/cxf/cxf-extension-soap.xml
+            classpath:META-INF/cxf/cxf-servlet.xml
+            classpath:${parentArtifactId}-service-ctx.xml
+            classpath:${parentArtifactId}-db-ctx.xml
+            WEB-INF/webservices-ctx.xml
+            WEB-INF/monitoring-ctx.xml
+        </param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>/WEB-INF/log4j.xml</param-value>
+    </context-param>
+    <context-param>
+        <param-name>log4jRefreshInterval</param-name>
+        <param-value>5000</param-value>
+    </context-param>
+    <context-param>
+        <param-name>log4jExposeWebAppRoot</param-name>
+        <param-value>false</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>${parentArtifactId}-${symbol_dollar}{pom.version}</param-value>
+    </context-param>
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>
+            org.springframework.web.util.Log4jConfigListener
+        </listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>remoting</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>remoting</servlet-name>
+        <url-pattern>/remoting/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CXFServlet</servlet-name>
+        <display-name>CXF Servlet</display-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CXFServlet</servlet-name>
+        <url-pattern>/webservices/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Monitoring Servlet</servlet-name>
+        <servlet-class>de.web.common.monitoring.check.servlet.SpringServerCheckServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Monitoring Servlet</servlet-name>
+        <url-pattern>/-system/check</url-pattern>
+    </servlet-mapping>
+
+</web-app>

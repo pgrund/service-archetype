@@ -1,0 +1,33 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+see http://maven.apache.org/plugins/maven-changes-plugin/changes.html
+as reference for format of changes.xml
+-->
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
+  <properties>
+    <title>Changes for ${artifactId}</title>
+    <author email="author@1und1.de">author</author>
+  </properties>
+  <body>
+      
+      <release version="1.0" date="???" description="??">
+          <action dev="author" type="add">
+              add feature
+           </action>
+          <action dev="author" type="update">
+              update feature
+          </action>
+          <action dev="author" type="fix" issue="???">
+            bug fix (incl. link to bugzilla)
+          </action>
+          <action dev="author" type="remove">
+               remove feature
+          </action>
+    </release>
+  </body>
+</document>

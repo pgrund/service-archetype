@@ -1,0 +1,141 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+${symbol_pound}${symbol_pound} Licensed to the Apache Software Foundation (ASF) under one
+${symbol_pound}${symbol_pound} or more contributor license agreements.  See the NOTICE file
+${symbol_pound}${symbol_pound} distributed with this work for additional information
+${symbol_pound}${symbol_pound} regarding copyright ownership.  The ASF licenses this file
+${symbol_pound}${symbol_pound} to you under the Apache License, Version 2.0 (the
+${symbol_pound}${symbol_pound} "License"); you may not use this file except in compliance
+${symbol_pound}${symbol_pound} with the License.  You may obtain a copy of the License at
+${symbol_pound}${symbol_pound}
+${symbol_pound}${symbol_pound}  http://www.apache.org/licenses/LICENSE-2.0
+${symbol_pound}${symbol_pound}
+${symbol_pound}${symbol_pound} Unless required by applicable law or agreed to in writing,
+${symbol_pound}${symbol_pound} software distributed under the License is distributed on an
+${symbol_pound}${symbol_pound} "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+${symbol_pound}${symbol_pound} KIND, either express or implied.  See the License for the
+${symbol_pound}${symbol_pound} specific language governing permissions and limitations
+${symbol_pound}${symbol_pound} under the License.
+
+${symbol_pound}set ( ${symbol_dollar}maximumDeployed = 5)
+The ${symbol_dollar}{developmentTeam} is pleased to announce the ${symbol_dollar}{release.getVersion()} release!
+
+This shall be deployed on production system on ${symbol_dollar}{release.getDateRelease()}, please be prepared.
+
+
+${symbol_pound}if (${symbol_dollar}release.getActions().size() == 0)
+No changes defined in this version.
+${symbol_pound}else
+Changes in this version include:
+
+${symbol_pound}if (${symbol_dollar}release.getActions('add').size() !=0)
+New features:
+${symbol_pound}foreach(${symbol_dollar}actionItem in ${symbol_dollar}release.getActions('add'))
+${symbol_pound}set(${symbol_dollar}action=${symbol_dollar}actionItem.getAction())
+${symbol_pound}if (${symbol_dollar}actionItem.getIssue())
+${symbol_pound}set(${symbol_dollar}issue=${symbol_dollar}actionItem.getIssue())
+${symbol_pound}else
+${symbol_pound}set(${symbol_dollar}issue="")
+${symbol_pound}end
+${symbol_pound}if (${symbol_dollar}actionItem.getDueTo())
+${symbol_pound}set(${symbol_dollar}dueto=${symbol_dollar}actionItem.getDueTo())
+${symbol_pound}else
+${symbol_pound}set(${symbol_dollar}dueto="")
+${symbol_pound}end
+o ${symbol_dollar}{action} ${symbol_pound}if(${symbol_dollar}!issue != "") Issue: ${symbol_dollar}issue. ${symbol_pound}end${symbol_pound}if(${symbol_dollar}!dueto != "")Thanks to ${symbol_dollar}dueto. ${symbol_pound}end
+
+${symbol_pound}set(${symbol_dollar}issue="")
+${symbol_pound}set(${symbol_dollar}dueto="")
+${symbol_pound}end 
+${symbol_pound}end
+
+${symbol_pound}if (${symbol_dollar}release.getActions('fix').size() !=0)
+Fixed Bugs:
+${symbol_pound}foreach(${symbol_dollar}actionItem in ${symbol_dollar}release.getActions('fix'))
+${symbol_pound}set(${symbol_dollar}action=${symbol_dollar}actionItem.getAction())
+${symbol_pound}if (${symbol_dollar}actionItem.getIssue())
+${symbol_pound}set(${symbol_dollar}issue=${symbol_dollar}actionItem.getIssue())
+${symbol_pound}else
+${symbol_pound}set(${symbol_dollar}issue="")
+${symbol_pound}end
+${symbol_pound}if (${symbol_dollar}actionItem.getDueTo())
+${symbol_pound}set(${symbol_dollar}dueto=${symbol_dollar}actionItem.getDueTo())
+${symbol_pound}else
+${symbol_pound}set(${symbol_dollar}dueto="")
+${symbol_pound}end
+o ${symbol_dollar}{action} ${symbol_pound}if(${symbol_dollar}!issue != "") Issue: ${symbol_dollar}issue. ${symbol_pound}end${symbol_pound}if(${symbol_dollar}!dueto != "")Thanks to ${symbol_dollar}dueto. ${symbol_pound}end
+
+${symbol_pound}set(${symbol_dollar}issue="")
+${symbol_pound}set(${symbol_dollar}dueto="")
+${symbol_pound}end
+${symbol_pound}end
+
+${symbol_pound}if (${symbol_dollar}release.getActions('update').size() !=0)
+Changes:
+${symbol_pound}foreach(${symbol_dollar}actionItem in ${symbol_dollar}release.getActions('update'))
+${symbol_pound}set(${symbol_dollar}action=${symbol_dollar}actionItem.getAction())
+${symbol_pound}if (${symbol_dollar}actionItem.getIssue())
+${symbol_pound}set(${symbol_dollar}issue=${symbol_dollar}actionItem.getIssue())
+${symbol_pound}else
+${symbol_pound}set(${symbol_dollar}issue="")
+${symbol_pound}end
+${symbol_pound}if (${symbol_dollar}actionItem.getDueTo())
+${symbol_pound}set(${symbol_dollar}dueto=${symbol_dollar}actionItem.getDueTo())
+${symbol_pound}else
+${symbol_pound}set(${symbol_dollar}dueto="")
+${symbol_pound}end
+o ${symbol_dollar}{action} ${symbol_pound}if(${symbol_dollar}!issue != "") Issue: ${symbol_dollar}issue. ${symbol_pound}end${symbol_pound}if(${symbol_dollar}!dueto != "")Thanks to ${symbol_dollar}dueto. ${symbol_pound}end
+
+${symbol_pound}set(${symbol_dollar}issue="")
+${symbol_pound}set(${symbol_dollar}dueto="")
+${symbol_pound}end
+${symbol_pound}end
+
+${symbol_pound}if (${symbol_dollar}release.getActions('remove').size() !=0)
+Removed:
+${symbol_pound}foreach(${symbol_dollar}actionItem in ${symbol_dollar}release.getActions('remove'))
+${symbol_pound}set(${symbol_dollar}action=${symbol_dollar}actionItem.getAction())
+${symbol_pound}if (${symbol_dollar}actionItem.getIssue())
+${symbol_pound}set(${symbol_dollar}issue=${symbol_dollar}actionItem.getIssue())
+${symbol_pound}else
+${symbol_pound}set(${symbol_dollar}issue="")
+${symbol_pound}end
+${symbol_pound}if (${symbol_dollar}actionItem.getDueTo())
+${symbol_pound}set(${symbol_dollar}dueto=${symbol_dollar}actionItem.getDueTo())
+${symbol_pound}else
+${symbol_pound}set(${symbol_dollar}dueto="")
+${symbol_pound}end
+o ${symbol_dollar}{action} ${symbol_pound}if(${symbol_dollar}!issue != "") Issue: ${symbol_dollar}issue. ${symbol_pound}end${symbol_pound}if(${symbol_dollar}!dueto != "")Thanks to ${symbol_dollar}dueto. ${symbol_pound}end
+
+${symbol_pound}set(${symbol_dollar}issue="")
+${symbol_pound}set(${symbol_dollar}dueto="")
+${symbol_pound}end
+${symbol_pound}end
+${symbol_pound}${symbol_pound} End of main loop
+${symbol_pound}end
+${symbol_pound}if (${symbol_dollar}urlDownload)
+
+For a manual installation, you can download the ${symbol_dollar}{finalName} here:
+${symbol_dollar}{urlDownload}
+${symbol_pound}end
+
+Please be aware that the last ${symbol_dollar}maximumDeployed versions will be available after deployment.
+
+${symbol_pound}foreach ( ${symbol_dollar}r in ${symbol_dollar}releases )
+${symbol_pound}if ( ${symbol_dollar}r.getVersion() == ${symbol_dollar}release.getVersion() )
+${symbol_pound}set( ${symbol_dollar}start = ${symbol_dollar}velocityCount )
+${symbol_pound}end
+${symbol_pound}if ( ${symbol_dollar}velocityCount - ${symbol_dollar}start < ${symbol_dollar}maximumDeployed )
+    o ${symbol_dollar}{r.getVersion()} - deployed at ${symbol_dollar}{r.getDateRelease()}
+${symbol_pound}end
+${symbol_pound}end
+
+Older versions will be undeployed, so PLEASE BE PREPARED!!!
+
+Further information can be found on prjects web site:
+${symbol_dollar}url
+
+Have fun!
+-${symbol_dollar}{developmentTeam}
+

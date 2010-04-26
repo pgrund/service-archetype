@@ -1,0 +1,16 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project>
+  <version position="right"/>
+  <body>
+    <menu ref="parent"/>    
+    <menu ref="modules"/>
+    <menu name="General Information">
+      <item name="Project" href="project-info.html"/>
+      <item name="Release Plan" href="changes-report.html"/>
+    </menu>        
+    <menu ref="reports"/>
+  </body>
+</project>

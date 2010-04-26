@@ -1,0 +1,1 @@
+INSERT INTO auftragmatrix (techauftrag_id,bz_id,artikel_id,artikelgruppe_id,artikelnummer,featurenummer,quantitaet,ext_vertragpos) VALUES('40050799','584','148432296','84','2','3','1', null);

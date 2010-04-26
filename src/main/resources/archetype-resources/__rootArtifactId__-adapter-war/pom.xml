@@ -1,0 +1,262 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>${groupId}</groupId>
+        <artifactId>${rootArtifactId}</artifactId>
+        <version>${version}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>${parentArtifactId}-adapter-war</artifactId>
+    <packaging>war</packaging>
+    <name>${artifactId} Maven Webapp</name>
+
+    <build>
+        <finalName>${parentArtifactId}-${symbol_dollar}{version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                    <webResources>
+                        <resource>
+                            <directory>${symbol_dollar}{basedir}/src/main/webapp/WEB-INF</directory>
+                            <includes>
+                                <include>log4j.xml</include>
+                                <include>web.xml</include>
+                                <include>*-servlet.xml</include>
+                            </includes>
+                            <targetPath>WEB-INF</targetPath>
+                            <filtering>true</filtering>
+                        </resource>
+                        <resource>
+                            <directory>${symbol_dollar}{basedir}/src/main/webapp</directory>
+                            <includes>
+                                <include>*.jsp</include>
+                            </includes>
+                            <filtering>true</filtering>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.0-beta-2</version>
+                <executions>
+                    <execution>
+                        <id>tomcat-execution</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>tomcat-shutdown</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <wait>${symbol_dollar}{cargo.wait}</wait>
+                    <container>
+                        <containerId>tomcat5x</containerId>
+                        <zipUrlInstaller>
+                            <url>http://archive.apache.org/dist/tomcat/tomcat-5/v${symbol_dollar}{tomcat.version}/bin/apache-tomcat-${symbol_dollar}{tomcat.version}.zip</url>
+                            <installDir>${symbol_dollar}{java.io.tmpdir}/cargo-installs</installDir>
+                        </zipUrlInstaller>
+                    </container>
+                    <configuration>
+                        <home>${symbol_dollar}{project.build.directory}/tomcat5x/container</home>
+                        <properties>
+                            <cargo.hostname>${symbol_dollar}{cargo.host}</cargo.hostname>
+                            <cargo.servlet.port>${symbol_dollar}{cargo.port}</cargo.servlet.port>
+                            <cargo.logging>high</cargo.logging>
+                            <!--cargo.jvmargs>
+                                         -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n
+                                    -->
+                            <cargo.jvmargs>-XX:+CMSClassUnloadingEnabled -Dcom.sun.management.jmxremote</cargo.jvmargs>
+                        </properties>
+                        <deployables>
+                            <deployable>
+                                <groupId>${symbol_dollar}{pom.parent.groupId}</groupId>
+                                <artifactId>${rootArtifactId}-adapter-war</artifactId>
+                                <type>war</type>
+                            </deployable>
+                        </deployables>
+                    </configuration>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <debug>true</debug>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>${groupId}</groupId>
+            <artifactId>${rootArtifactId}-api</artifactId>
+            <version>${symbol_dollar}{version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>${groupId}</groupId>
+            <artifactId>${rootArtifactId}-service</artifactId>
+            <version>${symbol_dollar}{version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.4</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.15</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-embedder</artifactId>
+            <version>3.0-alpha-1</version>
+        </dependency>
+
+ <!-- spring version managed by parent -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>           
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+
+   <!-- Webservice -->
+        <!-- CXF und AbhÃ€ngigkeit -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-core</artifactId>
+            <version>${symbol_dollar}{cxf.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-context</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-core</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-beans</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http</artifactId>
+            <version>${symbol_dollar}{cxf.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-context</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-core</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-web</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-beans</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-bindings-soap</artifactId>
+            <version>${symbol_dollar}{cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>${symbol_dollar}{cxf.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>asm</artifactId>
+                    <groupId>asm</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- /CXF und AbhÃ€ngigkeit -->
+    <!-- /Webservice -->
+
+    <!-- Monitoring -->
+        <dependency>
+            <groupId>com.unitedinternet.portal.commons.monitoring</groupId>
+            <artifactId>commons-monitoring</artifactId>
+            <version>2.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>asm</groupId>
+                    <artifactId>asm</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>asm</groupId>
+                    <artifactId>asm-commons</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>commons-httpclient-unitedinternet</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1-unitedinternet-1</version>
+        </dependency>
+    <!-- /Monitoring -->
+
+    </dependencies>
+
+    <properties>
+        <cargo.host>localhost</cargo.host>
+        <cargo.port>8080</cargo.port>
+        <cargo.wait>false</cargo.wait>
+        <tomcat.version>5.5.27</tomcat.version>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>testing</id>
+            <build>
+            </build>
+        </profile>
+        <profile>
+            <id>production</id>
+            <build>
+            </build>
+        </profile>
+        <profile>
+            <id>standalonetesting</id>
+            <build>
+            </build>
+        </profile>
+    </profiles>
+</project>

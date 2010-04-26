@@ -1,0 +1,140 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ant-build-${artifactId}" default="run">
+    
+    <target name="createBuildIntTag">
+                
+       <echo>Passed params:
+                   param.localRepository:       ${symbol_dollar}{param.localRepository}
+                   param.artifactId:            ${symbol_dollar}{param.artifactId}
+                   param.groupId:               ${symbol_dollar}{param.groupId}
+                   param.version:               ${symbol_dollar}{param.version}
+                   param.snapshotRepositoryId:  ${symbol_dollar}{param.snapshotRepositoryId}
+                   param.subversionUrl          ${symbol_dollar}{param.subversionUrl}</echo>
+                   
+        <pathconvert property="tmp.groupIdAsPath">
+             <path path="${symbol_dollar}{param.groupId}"/>
+             <map from="${symbol_dollar}{basedir}" to=""/>
+             <unpackagemapper from="${symbol_dollar}{basedir}" to="${symbol_dollar}{basedir}"/>
+         </pathconvert>
+         
+         <echo>tmp.groupIdAsPath:               ${symbol_dollar}{tmp.groupIdAsPath}</echo>
+         
+         <property name="tmp.mavenMetaDataFile"
+                location="${symbol_dollar}{param.localRepository}/${symbol_dollar}{tmp.groupIdAsPath}/${symbol_dollar}{param.artifactId}/${symbol_dollar}{param.version}/maven-metadata-${symbol_dollar}{param.snapshotRepositoryId}.xml"/>
+                
+         <echo>tmp.mavenMetaDataFile:           ${symbol_dollar}{tmp.mavenMetaDataFile}</echo>
+         
+         <xmlproperty file="${symbol_dollar}{tmp.mavenMetaDataFile}" prefix="tmpMD"/>   
+      <property name="tmp.buildNumber" value="${symbol_dollar}{tmpMD.metadata.versioning.snapshot.buildNumber}" />
+      <echo>data from mavenMetaDataFile:
+                    version:      ${symbol_dollar}{tmpMD.metadata.versioning}
+                    snapshot:     ${symbol_dollar}{tmpMD.metadata.versioning.snapshot}
+                    build number: ${symbol_dollar}{tmpMD.metadata.versioning.snapshot.buildNumber}</echo>
+    
+         <echo>using Build No: ${symbol_dollar}{tmp.buildNumber}</echo>
+         
+         <echo>trying to execute:
+                    svn copy --message "Build ${symbol_pound}${symbol_dollar}{tmp.buildNumber}"
+                        ${symbol_dollar}{param.subversionUrl}/tags/builds/${symbol_dollar}{param.version}/NEXUS-BUILD-${symbol_dollar}{tmp.buildNumber}</echo>
+    
+         <exec executable="svn" failonerror="true">
+             <arg value="copy"/>
+             <arg value="--message"/>
+             <arg value="Build ${symbol_pound}${symbol_dollar}{tmp.buildNumber}"/>
+             <arg value="."/>
+             <arg value="${symbol_dollar}{param.subversionUrl}/tags/builds/${symbol_dollar}{param.version}/NEXUS-BUILD-${symbol_dollar}{tmp.buildNumber}"/>
+         </exec>
+            
+         <echo>Created tag: ${symbol_dollar}{param.subversionUrl}/tags/builds/${symbol_dollar}{param.version}/NEXUS-BUILD-${symbol_dollar}{tmp.buildNumber}</echo>
+    </target>
+    
+    <target name="svninfo" unless="dontCheckBuildSource">
+        
+         <fail unless="param.targetDir" message="a target directory needs to be set!"/>
+         
+          <mkdir dir="${symbol_dollar}{param.targetDir}"/>
+        
+          <exec executable="svn" failonerror="true" output="${symbol_dollar}{param.targetDir}/~tmpSvnInfo.xml">
+             <arg value="info" />
+             <arg value="." />                                     
+             <arg value="--xml"/>
+         </exec>
+
+         <xmlproperty file="${symbol_dollar}{param.targetDir}/~tmpSvnInfo.xml" prefix="svninfo"/>
+         
+         <delete file="${symbol_dollar}{param.targetDir}/~tmpSvnInfo.xml"/>
+         
+         <echo>check ${symbol_dollar}{svninfo.info.entry.url} for build dir ...</echo>         
+         
+         <fail message="NO INTEGRATION BUILD as base defined .... ">
+            <condition>
+                  <not>
+                   <contains string="${symbol_dollar}{svninfo.info.entry.url}" substring="BUILD-"/>
+                  </not>                 
+            </condition>    
+         </fail>
+                  
+    </target>
+    
+   <target name="preRelease-prepare" depends="svninfo">
+        
+        <echo>Passed params:                  
+                   param.version:               ${symbol_dollar}{param.version}
+                   param.searchStr:             ${symbol_dollar}{param.searchStr}
+                   param.replaceStr:            ${symbol_dollar}{param.replaceStr}
+                   param.file:                  ${symbol_dollar}{param.file}                 
+                   param.targetDir:             ${symbol_dollar}{param.targetDir}</echo>                   
+       
+        <fail message="replace parameters not fully specified (replaceStr, searchStr, file)">
+            <condition>
+                <or>
+                 <not>
+                   <isset property="param.searchStr"/>
+                 </not>  
+                 <not>
+                   <isset property="param.replaceStr"/>
+                 </not>  
+                 <not>
+                   <isset property="param.file"/>
+                 </not>  
+                </or>
+            </condition>
+        </fail>
+        
+        <fail message="project parameters not fully specified (version, targetDir">
+            <condition>
+                <or>
+                 <not>
+                   <isset property="param.version"/>
+                 </not>                  
+                  <not>
+                   <isset property="param.targetDir"/>
+                 </not>  
+                </or>
+              </condition>
+          </fail>    
+         
+         <replaceregexp file="${symbol_dollar}{param.file}"
+                match="${symbol_dollar}{param.searchStr}"
+                replace="${symbol_dollar}{param.replaceStr}"
+                byline="true"/>
+       
+        <echo>replacing done:
+                ${symbol_dollar}{param.searchStr}
+                ${symbol_dollar}{param.replaceStr}</echo>
+
+         <echo>trying to execute:  svn commit --message "[preRelease-management] fixed scm connection"  ${symbol_dollar}{param.file}</echo>                                 
+
+         <exec executable="svn" failonerror="true">
+             <arg value="commit" />     
+             <arg value="-m" />
+             <arg value="[preRelease-management] fixed scm connection" />                                     
+             <arg value="${symbol_dollar}{param.file}" />
+         </exec>    
+         
+    </target>
+</project>
+
