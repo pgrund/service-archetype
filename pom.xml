@@ -36,15 +36,20 @@
         <developerConnection>scm:git:git@github.com:pgrund/service-archetype.git</developerConnection>
     </scm>
 
-    <distributionManagement>
-        <repository>
-            <id>dh-repo</id>
-            <url>ftp://dh-karlsruhe.peter.grund.de</url>
-        </repository>
-        <site>
-            <id>dh-site</id>
-            <url>ftp://dh-karlsruhe.peter.grund.de/${artifactId}</url>
-        </site>
-    </distributionManagement>
+ <distributionManagement>
+    <repository>
+      <id>1und1-releases</id>
+      <url>${mavenrepo.releases}</url>
+    </repository>
+    <snapshotRepository>
+      <id>1und1-snapshots</id>
+      <url>${mavenrepo.snapshots}</url>
+    </snapshotRepository>
+    <site>
+      <id>ivar</id>
+      <url>scp://ivar:ivar0815@devel.schlund.de/home/ivar/public_html/service-archetype</url>
+    </site>
+  </distributionManagement>
+
 </project>
 
